@@ -1,0 +1,503 @@
+
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Reporte de Apuestas por Posición</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; background-color: #f8f9fa; }
+            h1 { color: #333; }
+            h2 { color: #0056b3; margin-top: 30px; }
+            h3 { color: #495057; margin-top: 25px; }
+            table { border-collapse: collapse; width: 100%; margin-bottom: 20px; background-color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+            th, td { border: 1px solid #dee2e6; padding: 10px; text-align: center; }
+            th { background-color: #343a40; color: white; }
+            tr:nth-child(even) { background-color: #f2f2f2; }
+        </style>
+    </head>
+    <body>
+        <h1>Reporte Estrategia Apuestas por Diferencia de Posición</h1>
+        <p><b>Stake evaluado:</b> $100 por partido en cada opción de manera independiente.</p>
+        <h2>RESUMEN CONSOLIDADO GLOBAL</h2>
+        <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Tramo Diferencia</th>
+      <th>Partidos</th>
+      <th>% Win L</th>
+      <th>ROI L</th>
+      <th>P&amp;L L ($)</th>
+      <th>% Win E</th>
+      <th>ROI E</th>
+      <th>P&amp;L E ($)</th>
+      <th>% Win V</th>
+      <th>ROI V</th>
+      <th>P&amp;L V ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Local Muy Inferior (-20 a -11)</td>
+      <td>612</td>
+      <td>19.1%</td>
+      <td>-1.94%</td>
+      <td>$-1,189</td>
+      <td>23.9%</td>
+      <td>-1.41%</td>
+      <td>$-865</td>
+      <td>57.0%</td>
+      <td>-7.66%</td>
+      <td>$-4,687</td>
+    </tr>
+    <tr>
+      <td>Local Inferior (-10 a -6)</td>
+      <td>1036</td>
+      <td>28.9%</td>
+      <td>-10.58%</td>
+      <td>$-10,959</td>
+      <td>24.6%</td>
+      <td>-8.61%</td>
+      <td>$-8,919</td>
+      <td>46.5%</td>
+      <td>-1.18%</td>
+      <td>$-1,224</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Inferior (-5 a -1)</td>
+      <td>1529</td>
+      <td>37.4%</td>
+      <td>-6.20%</td>
+      <td>$-9,479</td>
+      <td>29.2%</td>
+      <td>+3.27%</td>
+      <td>$+4,993</td>
+      <td>33.4%</td>
+      <td>-10.47%</td>
+      <td>$-16,009</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Superior (+1 a +5)</td>
+      <td>1524</td>
+      <td>52.0%</td>
+      <td>-1.57%</td>
+      <td>$-2,391</td>
+      <td>25.2%</td>
+      <td>-4.22%</td>
+      <td>$-6,432</td>
+      <td>22.8%</td>
+      <td>-9.91%</td>
+      <td>$-15,096</td>
+    </tr>
+    <tr>
+      <td>Local Superior (+6 a +10)</td>
+      <td>956</td>
+      <td>59.0%</td>
+      <td>-6.15%</td>
+      <td>$-5,877</td>
+      <td>23.0%</td>
+      <td>-2.94%</td>
+      <td>$-2,812</td>
+      <td>18.0%</td>
+      <td>-9.00%</td>
+      <td>$-8,606</td>
+    </tr>
+    <tr>
+      <td>Local Muy Superior (+11 a +20)</td>
+      <td>618</td>
+      <td>73.8%</td>
+      <td>-1.55%</td>
+      <td>$-957</td>
+      <td>18.1%</td>
+      <td>-3.41%</td>
+      <td>$-2,108</td>
+      <td>8.1%</td>
+      <td>-31.02%</td>
+      <td>$-19,172</td>
+    </tr>
+  </tbody>
+</table>
+        <h2>DESGLOSE POR LIGAS</h2>
+    <h3>LIGA: Eredivisie (Partidos: 1387)</h3><table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Tramo Diferencia</th>
+      <th>Partidos</th>
+      <th>% Win L</th>
+      <th>ROI L</th>
+      <th>P&amp;L L ($)</th>
+      <th>% Win E</th>
+      <th>ROI E</th>
+      <th>P&amp;L E ($)</th>
+      <th>% Win V</th>
+      <th>ROI V</th>
+      <th>P&amp;L V ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Local Muy Inferior (-20 a -11)</td>
+      <td>111</td>
+      <td>12.6%</td>
+      <td>-7.57%</td>
+      <td>$-841</td>
+      <td>20.7%</td>
+      <td>-2.11%</td>
+      <td>$-235</td>
+      <td>66.7%</td>
+      <td>+3.82%</td>
+      <td>$+424</td>
+    </tr>
+    <tr>
+      <td>Local Inferior (-10 a -6)</td>
+      <td>236</td>
+      <td>27.5%</td>
+      <td>-13.01%</td>
+      <td>$-3,071</td>
+      <td>24.2%</td>
+      <td>-4.23%</td>
+      <td>$-999</td>
+      <td>48.3%</td>
+      <td>-5.40%</td>
+      <td>$-1,275</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Inferior (-5 a -1)</td>
+      <td>347</td>
+      <td>37.2%</td>
+      <td>-3.53%</td>
+      <td>$-1,227</td>
+      <td>30.5%</td>
+      <td>+14.14%</td>
+      <td>$+4,908</td>
+      <td>32.3%</td>
+      <td>-15.27%</td>
+      <td>$-5,298</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Superior (+1 a +5)</td>
+      <td>354</td>
+      <td>50.6%</td>
+      <td>-7.74%</td>
+      <td>$-2,741</td>
+      <td>24.6%</td>
+      <td>+1.48%</td>
+      <td>$+525</td>
+      <td>24.9%</td>
+      <td>-4.05%</td>
+      <td>$-1,433</td>
+    </tr>
+    <tr>
+      <td>Local Superior (+6 a +10)</td>
+      <td>226</td>
+      <td>59.3%</td>
+      <td>-12.00%</td>
+      <td>$-2,713</td>
+      <td>24.8%</td>
+      <td>+23.81%</td>
+      <td>$+5,381</td>
+      <td>15.9%</td>
+      <td>-22.08%</td>
+      <td>$-4,991</td>
+    </tr>
+    <tr>
+      <td>Local Muy Superior (+11 a +20)</td>
+      <td>113</td>
+      <td>80.5%</td>
+      <td>-1.57%</td>
+      <td>$-177</td>
+      <td>11.5%</td>
+      <td>-20.82%</td>
+      <td>$-2,353</td>
+      <td>8.0%</td>
+      <td>-26.57%</td>
+      <td>$-3,002</td>
+    </tr>
+  </tbody>
+</table><h3>LIGA: La Liga (Partidos: 1748)</h3><table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Tramo Diferencia</th>
+      <th>Partidos</th>
+      <th>% Win L</th>
+      <th>ROI L</th>
+      <th>P&amp;L L ($)</th>
+      <th>% Win E</th>
+      <th>ROI E</th>
+      <th>P&amp;L E ($)</th>
+      <th>% Win V</th>
+      <th>ROI V</th>
+      <th>P&amp;L V ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Local Muy Inferior (-20 a -11)</td>
+      <td>200</td>
+      <td>27.5%</td>
+      <td>+13.85%</td>
+      <td>$+2,769</td>
+      <td>31.5%</td>
+      <td>+14.39%</td>
+      <td>$+2,878</td>
+      <td>41.0%</td>
+      <td>-23.32%</td>
+      <td>$-4,664</td>
+    </tr>
+    <tr>
+      <td>Local Inferior (-10 a -6)</td>
+      <td>284</td>
+      <td>33.5%</td>
+      <td>+0.50%</td>
+      <td>$+142</td>
+      <td>22.2%</td>
+      <td>-23.48%</td>
+      <td>$-6,669</td>
+      <td>44.4%</td>
+      <td>+9.55%</td>
+      <td>$+2,712</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Inferior (-5 a -1)</td>
+      <td>406</td>
+      <td>37.4%</td>
+      <td>-10.46%</td>
+      <td>$-4,246</td>
+      <td>30.8%</td>
+      <td>+2.97%</td>
+      <td>$+1,207</td>
+      <td>31.8%</td>
+      <td>-7.95%</td>
+      <td>$-3,228</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Superior (+1 a +5)</td>
+      <td>411</td>
+      <td>54.3%</td>
+      <td>+3.47%</td>
+      <td>$+1,426</td>
+      <td>25.3%</td>
+      <td>-10.62%</td>
+      <td>$-4,367</td>
+      <td>20.4%</td>
+      <td>-22.22%</td>
+      <td>$-9,131</td>
+    </tr>
+    <tr>
+      <td>Local Superior (+6 a +10)</td>
+      <td>251</td>
+      <td>58.6%</td>
+      <td>-3.69%</td>
+      <td>$-926</td>
+      <td>24.3%</td>
+      <td>-7.84%</td>
+      <td>$-1,969</td>
+      <td>17.1%</td>
+      <td>-12.82%</td>
+      <td>$-3,217</td>
+    </tr>
+    <tr>
+      <td>Local Muy Superior (+11 a +20)</td>
+      <td>196</td>
+      <td>73.0%</td>
+      <td>+3.60%</td>
+      <td>$+707</td>
+      <td>16.8%</td>
+      <td>-20.26%</td>
+      <td>$-3,970</td>
+      <td>10.2%</td>
+      <td>-10.06%</td>
+      <td>$-1,972</td>
+    </tr>
+  </tbody>
+</table><h3>LIGA: Premier League (Partidos: 1749)</h3><table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Tramo Diferencia</th>
+      <th>Partidos</th>
+      <th>% Win L</th>
+      <th>ROI L</th>
+      <th>P&amp;L L ($)</th>
+      <th>% Win E</th>
+      <th>ROI E</th>
+      <th>P&amp;L E ($)</th>
+      <th>% Win V</th>
+      <th>ROI V</th>
+      <th>P&amp;L V ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Local Muy Inferior (-20 a -11)</td>
+      <td>189</td>
+      <td>16.9%</td>
+      <td>-11.99%</td>
+      <td>$-2,266</td>
+      <td>23.3%</td>
+      <td>+0.85%</td>
+      <td>$+160</td>
+      <td>59.8%</td>
+      <td>-6.20%</td>
+      <td>$-1,172</td>
+    </tr>
+    <tr>
+      <td>Local Inferior (-10 a -6)</td>
+      <td>295</td>
+      <td>28.1%</td>
+      <td>-13.70%</td>
+      <td>$-4,041</td>
+      <td>27.1%</td>
+      <td>+3.21%</td>
+      <td>$+947</td>
+      <td>44.7%</td>
+      <td>-4.41%</td>
+      <td>$-1,302</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Inferior (-5 a -1)</td>
+      <td>398</td>
+      <td>41.5%</td>
+      <td>+3.12%</td>
+      <td>$+1,241</td>
+      <td>23.6%</td>
+      <td>-11.70%</td>
+      <td>$-4,658</td>
+      <td>34.9%</td>
+      <td>-5.73%</td>
+      <td>$-2,282</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Superior (+1 a +5)</td>
+      <td>420</td>
+      <td>52.6%</td>
+      <td>-0.43%</td>
+      <td>$-181</td>
+      <td>23.6%</td>
+      <td>-7.18%</td>
+      <td>$-3,018</td>
+      <td>23.8%</td>
+      <td>-8.90%</td>
+      <td>$-3,740</td>
+    </tr>
+    <tr>
+      <td>Local Superior (+6 a +10)</td>
+      <td>254</td>
+      <td>54.3%</td>
+      <td>-11.59%</td>
+      <td>$-2,944</td>
+      <td>22.8%</td>
+      <td>-1.75%</td>
+      <td>$-445</td>
+      <td>22.8%</td>
+      <td>+29.01%</td>
+      <td>$+7,369</td>
+    </tr>
+    <tr>
+      <td>Local Muy Superior (+11 a +20)</td>
+      <td>193</td>
+      <td>69.4%</td>
+      <td>-6.03%</td>
+      <td>$-1,163</td>
+      <td>22.8%</td>
+      <td>+21.11%</td>
+      <td>$+4,074</td>
+      <td>7.8%</td>
+      <td>-40.06%</td>
+      <td>$-7,732</td>
+    </tr>
+  </tbody>
+</table><h3>LIGA: Primeira Liga (Partidos: 1391)</h3><table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Tramo Diferencia</th>
+      <th>Partidos</th>
+      <th>% Win L</th>
+      <th>ROI L</th>
+      <th>P&amp;L L ($)</th>
+      <th>% Win E</th>
+      <th>ROI E</th>
+      <th>P&amp;L E ($)</th>
+      <th>% Win V</th>
+      <th>ROI V</th>
+      <th>P&amp;L V ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Local Muy Inferior (-20 a -11)</td>
+      <td>112</td>
+      <td>14.3%</td>
+      <td>-7.60%</td>
+      <td>$-852</td>
+      <td>14.3%</td>
+      <td>-32.76%</td>
+      <td>$-3,669</td>
+      <td>71.4%</td>
+      <td>+6.48%</td>
+      <td>$+726</td>
+    </tr>
+    <tr>
+      <td>Local Inferior (-10 a -6)</td>
+      <td>221</td>
+      <td>25.3%</td>
+      <td>-18.05%</td>
+      <td>$-3,989</td>
+      <td>24.9%</td>
+      <td>-9.94%</td>
+      <td>$-2,197</td>
+      <td>49.8%</td>
+      <td>-6.15%</td>
+      <td>$-1,359</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Inferior (-5 a -1)</td>
+      <td>378</td>
+      <td>33.3%</td>
+      <td>-13.88%</td>
+      <td>$-5,247</td>
+      <td>32.3%</td>
+      <td>+9.35%</td>
+      <td>$+3,536</td>
+      <td>34.4%</td>
+      <td>-13.76%</td>
+      <td>$-5,202</td>
+    </tr>
+    <tr>
+      <td>Local Lig. Superior (+1 a +5)</td>
+      <td>339</td>
+      <td>50.1%</td>
+      <td>-2.64%</td>
+      <td>$-896</td>
+      <td>27.7%</td>
+      <td>+1.26%</td>
+      <td>$+427</td>
+      <td>22.1%</td>
+      <td>-2.34%</td>
+      <td>$-792</td>
+    </tr>
+    <tr>
+      <td>Local Superior (+6 a +10)</td>
+      <td>225</td>
+      <td>64.4%</td>
+      <td>+3.13%</td>
+      <td>$+704</td>
+      <td>20.0%</td>
+      <td>-25.68%</td>
+      <td>$-5,779</td>
+      <td>15.6%</td>
+      <td>-34.52%</td>
+      <td>$-7,767</td>
+    </tr>
+    <tr>
+      <td>Local Muy Superior (+11 a +20)</td>
+      <td>116</td>
+      <td>75.9%</td>
+      <td>-2.79%</td>
+      <td>$-324</td>
+      <td>19.0%</td>
+      <td>+1.22%</td>
+      <td>$+142</td>
+      <td>5.2%</td>
+      <td>-55.73%</td>
+      <td>$-6,465</td>
+    </tr>
+  </tbody>
+</table></body></html>

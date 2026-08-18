@@ -1,0 +1,9 @@
+# Archivos temporales y de Python
+__pycache__/
+*.pyc
+venv/
+.vscode/
+
+# Base de datos local
+*.db
+*.sqlite3
