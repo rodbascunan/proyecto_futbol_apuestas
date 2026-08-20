@@ -17,13 +17,13 @@ def cargar_modelo():
                 data = pickle.load(f)
             return data['model'], data['features']
         except Exception:
-            print(f"[ERROR] No se pudo cargar el modelo desde '{MODEL_PATH}': {e}")
+            print(f"[ERROR] No se pudo cargar el modelo: {e}")
             return None, None
 
-def cargar_partidos_futuros():
+def cargar_partidos_simulados():
     conn = sqlite3.connect(DB_PATH)
     
-    # Consulta adaptada para buscar partidos sin resultado o marcados como pendientes
+    # Toma los últimos 20 partidos de la base de datos para simular la cartelera
     query = """
         SELECT 
             mf.*,
@@ -34,30 +34,22 @@ def cargar_partidos_futuros():
         INNER JOIN partidos p ON mf.id_partido = p.id_partido
         LEFT JOIN equipos eh ON mf.id_equipo_home = eh.id_equipo
         LEFT JOIN equipos ea ON mf.id_equipo_away = ea.id_equipo
-        WHERE p.resultado_1x2 IS NULL 
-           OR p.resultado_1x2 = '' 
-           OR p.resultado_1x2 = 'None'
-           OR mf.resultado IS NULL
-           OR mf.resultado = ''
-        ORDER BY mf.fecha ASC
+        ORDER BY mf.fecha DESC
+        LIMIT 20
     """
     
-    try:
-        df = pd.read_sql_query(query, conn)
-    except Exception as e:
-        print(f"[ERROR] Error al consultar la base de datos: {e}")
-        df = pd.DataFrame()
-        
+    df = pd.read_sql_query(query, conn)
     conn.close()
     
-    if not df.empty:
-        # Filtrar registros que cuenten con cuotas válidas mayores a 1.0
-        df = df[
-            df['odd_1'].notnull() & 
-            df['odd_x'].notnull() & 
-            df['odd_2'].notnull()
-        ].copy()
+    # Filtrar solo registros con cuotas válidas
+    df = df[
+        df['odd_1'].notnull() & 
+        df['odd_x'].notnull() & 
+        df['odd_2'].notnull()
+    ].copy()
     
+    # Ordenar por fecha ascendente para mostrar en orden cronológico
+    df = df.sort_values(by='fecha', ascending=True).reset_index(drop=True)
     return df
 
 def generar_predicciones(bankroll=1000.0, min_ev=0.02, max_ev=0.30, kelly_fraction=0.10, max_stake_pct=0.03, allowed_picks=['X', '2']):
@@ -65,10 +57,9 @@ def generar_predicciones(bankroll=1000.0, min_ev=0.02, max_ev=0.30, kelly_fracti
     if not model:
         return
 
-    df = cargar_partidos_futuros()
+    df = cargar_partidos_simulados()
     if len(df) == 0:
-        print("\n[INFO] No hay partidos pendientes de jugar en la base de datos.")
-        print("Si buscas probar la cartelera con los últimos partidos históricos, actualiza la cláusula WHERE en la función 'cargar_partidos_futuros()'.")
+        print("\n[INFO] No se encontraron partidos en la base de datos.")
         return
 
     X = df.reindex(columns=feature_cols, fill_value=0)
@@ -118,11 +109,11 @@ def generar_predicciones(bankroll=1000.0, min_ev=0.02, max_ev=0.30, kelly_fracti
 
 def imprimir_cartelera(df, bankroll):
     if len(df) == 0:
-        print("\n[INFO] No se encontraron apuestas con valor esperado positivo (EV) para los partidos analizados.")
+        print("\n[INFO] No se encontraron apuestas con EV+ dentro de los rangos especificados.")
         return
 
     print("\n" + "=" * 90)
-    print(f"CARTELERA DE APUESTAS SUGERIDAS (BANKROLL BASE: ${bankroll:,.2f})")
+    print(f"CARTELERA DE APUESTAS SUGERIDAS (SIMULACIÓN ÚLTIMOS 20 PARTIDOS | BANKROLL: ${bankroll:,.2f})")
     print("=" * 90)
     header = f"{'Fecha':<10} | {'Local':<14} | {'Visita':<14} | {'Pick':<4} | {'Cuota':<5} | {'Prob %':<6} | {'EV %':<5} | {'Stake %':<7} | {'Apostar':<8}"
     print(header)
@@ -142,4 +133,4 @@ if __name__ == "__main__":
         max_stake_pct=0.03,
         allowed_picks=['X', '2']
     )
-     
+    
