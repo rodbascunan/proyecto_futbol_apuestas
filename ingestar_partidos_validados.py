@@ -17,7 +17,7 @@ def obtener_o_crear_id_equipo(cursor, nombre_equipo, id_liga):
     max_id = cursor.fetchone()[0]
     nuevo_id = (max_id if max_id is not None else 0) + 1
     
-    # Insertar incluyendo id_liga para cumplir el constraint
+    # Insertar incluyendo id_liga para cumplir el constraint NOT NULL
     cursor.execute(
         "INSERT INTO equipos (id_equipo, id_liga, nombre_oficial) VALUES (?, ?, ?)", 
         (nuevo_id, id_liga, nombre_equipo)
@@ -26,6 +26,7 @@ def obtener_o_crear_id_equipo(cursor, nombre_equipo, id_liga):
     return nuevo_id
 
 def obtener_ultimas_metricas_equipo(conn, id_equipo):
+    """Obtiene el último promedio móvil registrado para un equipo dado."""
     query = f"""
         SELECT 
             home_roll_gf, home_roll_gc, home_roll_xg_f, home_roll_xg_c,
@@ -41,6 +42,7 @@ def obtener_ultimas_metricas_equipo(conn, id_equipo):
     return None
 
 def insertar_partido_validado(liga, temporada, fecha_iso, local_nombre, visita_nombre, odd_1, odd_x, odd_2):
+    """Sincroniza y registra el partido tanto en la tabla 'partidos' como en 'matriz_features'."""
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -51,6 +53,7 @@ def insertar_partido_validado(liga, temporada, fecha_iso, local_nombre, visita_n
     id_partido = f"{liga}_{fecha_clean}_{id_home}_{id_away}"
 
     try:
+        # 1. Insertar en tabla 'partidos'
         sql_partidos = """
             INSERT OR REPLACE INTO partidos (
                 id_partido, id_liga, temporada, fecha_iso, 
@@ -60,6 +63,7 @@ def insertar_partido_validado(liga, temporada, fecha_iso, local_nombre, visita_n
         """
         cursor.execute(sql_partidos, (id_partido, liga, temporada, fecha_iso, id_home, id_away, odd_1, odd_x, odd_2))
 
+        # 2. Rescatar o asignar métricas base
         m_home = obtener_ultimas_metricas_equipo(conn, id_home)
         m_away = obtener_ultimas_metricas_equipo(conn, id_away)
 
@@ -76,6 +80,7 @@ def insertar_partido_validado(liga, temporada, fecha_iso, local_nombre, visita_n
         diff_xg = h_xgf - a_xgf
         diff_gf = h_gf - a_gf
 
+        # 3. Insertar en tabla 'matriz_features'
         sql_features = """
             INSERT OR REPLACE INTO matriz_features (
                 id_partido, id_liga, temporada, fecha, 
@@ -100,20 +105,23 @@ def insertar_partido_validado(liga, temporada, fecha_iso, local_nombre, visita_n
         conn.close()
 
 if __name__ == "__main__":
+    # Limpieza preventiva de pruebas previas
     conn = sqlite3.connect(DB_PATH)
     conn.execute("DELETE FROM partidos WHERE id_partido LIKE 'ENG1_2026%'")
     conn.execute("DELETE FROM matriz_features WHERE id_partido LIKE 'ENG1_2026%'")
     conn.commit()
     conn.close()
 
+    # Programación real con cuotas exactas de la casa de apuestas
     partidos_programados = [
-        ("ENG1", "2026-2027", "2026-08-22 10:00", "Ipswich", "Sunderland", 2.10, 4.20, 3.80),
+        # liga, temporada, fecha_hora, local, visita, odd_1, odd_x, odd_2
+        ("ENG1", "2026-2027", "2026-08-22 10:00", "Ipswich", "Sunderland", 2.78, 3.28, 2.73),
         ("ENG1", "2026-2027", "2026-08-21 15:00", "Arsenal", "Coventry", 1.30, 5.80, 11.00),
         ("ENG1", "2026-2027", "2026-08-31 15:00", "Aston Villa", "Arsenal", 3.10, 4.10, 2.40),
         ("ENG1", "2026-2027", "2026-09-06 12:30", "Arsenal", "Chelsea", 2.05, 4.30, 3.70)
     ]
 
-    print("\n--- CARGANDO PROGRAMACIÓN REAL CON AUTO-CREACIÓN DE EQUIPOS ---")
+    print("\n--- CARGANDO PROGRAMACIÓN CON CUOTAS REALES DE LA CASA DE APUESTAS ---")
     for p in partidos_programados:
         insertar_partido_validado(*p)
         
